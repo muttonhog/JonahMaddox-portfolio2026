@@ -17,9 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params
   const project = getProjectBySlug(slug)
 
-  if (!project) {
-    return { title: "Project Not Found" }
-  }
+  if (!project) return { title: "Project Not Found" }
 
   return {
     title: `${project.title} | Jonah`,
@@ -27,13 +25,45 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
+type MediaBlock = {
+  youtubeIds?: string[]
+  vimeoIds?: string[]
+  spotifyEmbed?: boolean
+}
+
+function hasMedia(block?: MediaBlock) {
+  return Boolean(
+    (block?.youtubeIds && block.youtubeIds.length > 0) ||
+      (block?.vimeoIds && block.vimeoIds.length > 0) ||
+      block?.spotifyEmbed
+  )
+}
+
+function RenderMedia({ block, title }: { block?: MediaBlock; title: string }) {
+  if (!hasMedia(block)) return null
+
+  return (
+    <div className="space-y-6">
+      {block?.youtubeIds?.map((id) => (
+        <YouTubeEmbed key={id} id={id} title={title} />
+      ))}
+      {block?.vimeoIds?.map((id) => (
+        <VimeoEmbed key={id} id={id} title={title} />
+      ))}
+      {block?.spotifyEmbed && <SpotifyEmbed />}
+    </div>
+  )
+}
+
 export default async function ProjectPage({ params }: PageProps) {
   const { slug } = await params
   const project = getProjectBySlug(slug)
 
-  if (!project) {
-    notFound()
-  }
+  if (!project) notFound()
+
+  const isFeatured = project.featured === true
+  const primary = project.embeds?.primary
+  const secondary = project.embeds?.secondary
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 md:py-16 lg:py-20">
@@ -47,64 +77,115 @@ export default async function ProjectPage({ params }: PageProps) {
         </p>
       </header>
 
-      {/* Divider */}
       <hr className="mb-12 border-border" />
 
-      {/* Content Sections */}
       <div className="space-y-12">
-        <section>
-          <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-            Challenge
-          </h2>
-          <p className="text-base leading-relaxed text-foreground">
-            {project.sections.challenge}
-          </p>
-        </section>
+        {isFeatured ? (
+          <>
+            {/* Context */}
+            {project.sections.context && (
+              <section>
+                <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+                  Context
+                </h2>
+                <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                  {project.sections.context}
+                </p>
+              </section>
+            )}
 
-        <section>
-          <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-            Key Decisions
-          </h2>
-          <p className="text-base leading-relaxed text-foreground">
-            {project.sections.decisions}
-          </p>
-        </section>
+            {/* Challenge */}
+            {project.sections.challenge && (
+              <section>
+                <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+                  Challenge
+                </h2>
+                <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                  {project.sections.challenge}
+                </p>
+              </section>
+            )}
 
-        <section>
-          <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-            Outcome
-          </h2>
-          <p className="text-base leading-relaxed text-foreground">
-            {project.sections.outcome}
-          </p>
-        </section>
+            {/* Approach (between Challenge and Outcome) */}
+            {project.sections.approach && (
+              <section>
+                <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+                  Approach
+                </h2>
+                <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                  {project.sections.approach}
+                </p>
+              </section>
+            )}
 
-        <section>
-          <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-            Learnings
-          </h2>
-          <p className="text-base leading-relaxed text-foreground">
-            {project.sections.learnings}
-          </p>
-        </section>
+            {/* Inline primary media (now after Approach) */}
+            {hasMedia(primary) && (
+              <section>
+                <RenderMedia block={primary} title={project.title} />
+              </section>
+            )}
 
-        {/* Embeds Section */}
-        {(project.embeds.youtubeIds?.length ||
-          project.embeds.vimeoIds?.length ||
-          project.embeds.spotifyEmbed) && (
+            {/* Outcome */}
+            {project.sections.outcome && (
+              <section>
+                <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+                  Outcome
+                </h2>
+                <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                  {project.sections.outcome}
+                </p>
+              </section>
+            )}
+          </>
+        ) : (
+          <>
+            {/* Non-featured: no sub-headers */}
+            {project.sections.context && (
+              <section>
+                <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                  {project.sections.context}
+                </p>
+              </section>
+            )}
+
+            {project.sections.challenge && (
+              <section>
+                <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                  {project.sections.challenge}
+                </p>
+              </section>
+            )}
+
+            {project.sections.approach && (
+              <section>
+                <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                  {project.sections.approach}
+                </p>
+              </section>
+            )}
+
+            {project.sections.outcome && (
+              <section>
+                <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                  {project.sections.outcome}
+                </p>
+              </section>
+            )}
+
+            {project.sections.learnings && (
+              <section>
+                <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                  {project.sections.learnings}
+                </p>
+              </section>
+            )}
+          </>
+        )}
+
+        {/* Secondary / supporting media (after Outcome) */}
+        {hasMedia(secondary) && (
           <section>
-            <h2 className="mb-6 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-              Media
-            </h2>
-            <div className="space-y-6">
-              {project.embeds.youtubeIds?.map((id) => (
-                <YouTubeEmbed key={id} id={id} title={project.title} />
-              ))}
-              {project.embeds.vimeoIds?.map((id) => (
-                <VimeoEmbed key={id} id={id} title={project.title} />
-              ))}
-              {project.embeds.spotifyEmbed && <SpotifyEmbed />}
-            </div>
+            <RenderMedia block={secondary} title={project.title} />
           </section>
         )}
       </div>
@@ -112,7 +193,7 @@ export default async function ProjectPage({ params }: PageProps) {
       {/* Back Link */}
       <div className="mt-16 border-t border-border pt-8">
         <Link
-          href="/"
+          href="/work"
           className="text-sm text-muted-foreground transition-opacity duration-150 hover:opacity-70"
         >
           &larr; Back to work
