@@ -6,14 +6,11 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <div className="mx-auto max-w-xl px-6 py-12 md:py-16 lg:py-20">
-      <h1 className="text-2xl font-normal tracking-tight text-foreground md:text-3xl">
-        Contact
-      </h1>
-
-      <p className="mt-4 text-sm font-light leading-relaxed text-muted-foreground md:text-base">
+      <p className="text-sm font-light leading-relaxed text-muted-foreground md:text-base">
         If you’d like to get in touch about a project or collaboration, feel free
         to use the form below.
       </p>
+
       <form
         action="https://formspree.io/f/mjgoeloz"
         method="POST"
@@ -56,6 +53,8 @@ export default function ContactPage() {
           Send message
         </button>
       </form>
+
+      {/* LinkedIn link */}
       <div className="mt-8 border-t border-border pt-6">
         <p className="text-sm font-light text-muted-foreground">
           Or find me on{" "}
@@ -69,6 +68,7 @@ export default function ContactPage() {
           </a>
           .
         </p>
+      </div>
     </div>
   )
 }
