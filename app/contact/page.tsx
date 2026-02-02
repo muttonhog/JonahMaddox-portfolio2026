@@ -1,3 +1,4 @@
+import { Linkedin } from "lucide-react"
 export const metadata = {
   title: "Contact | Jonah Maddox",
   description: "Get in touch with Jonah Maddox.",
@@ -55,20 +56,19 @@ export default function ContactPage() {
       </form>
 
       {/* LinkedIn link */}
-      <div className="mt-8 border-t border-border pt-6">
-        <p className="text-sm font-light text-muted-foreground">
-          Or find me on{" "}
-          <a
-            href="https://www.linkedin.com/in/jonahmaddox/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-4 hover:text-foreground"
-          >
-            LinkedIn
-          </a>
-          .
-        </p>
-      </div>
+     <div className="mt-8 border-t border-border pt-6">
+  <a
+    href="https://www.linkedin.com/in/jonahmaddox/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Jonah Maddox on LinkedIn"
+    className="inline-flex items-center gap-2 text-sm font-light text-muted-foreground hover:text-foreground"
+  >
+    <Linkedin className="h-4 w-4 stroke-[1.5]" />
+    <span>LinkedIn</span>
+  </a>
+</div>
+
     </div>
   )
 }
