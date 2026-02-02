@@ -1,69 +1,64 @@
-import type { Metadata } from "next"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-
-export const metadata: Metadata = {
-  title: "Contact | Jonah",
-  description: "Get in touch with Jonah about your project.",
+export const metadata = {
+  title: "Contact | Jonah Maddox",
+  description: "Get in touch with Jonah Maddox.",
 }
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-5xl px-6 py-12 md:py-16 lg:py-20">
-      <p className="mb-12 max-w-xl text-lg text-muted-foreground">
-        Have a project in mind or just want to say hello? I'd love to hear from
-        you.
+    <div className="mx-auto max-w-xl px-6 py-12 md:py-16 lg:py-20">
+      <h1 className="text-2xl font-normal tracking-tight text-foreground md:text-3xl">
+        Contact
+      </h1>
+
+      <p className="mt-4 text-sm font-light leading-relaxed text-muted-foreground md:text-base">
+        If you’d like to get in touch about a project or collaboration, feel free
+        to use the form below.
       </p>
+<p className="mb-4 rounded-md border border-border bg-muted px-3 py-2 text-xs text-foreground">
+  DEBUG CONTACT PAGE — action should be mjgoeloz
+</p>
+      <form
+        action="https://formspree.io/f/mjgoeloz"
+        method="POST"
+        className="mt-8 space-y-4"
+      >
+        <input
+          type="hidden"
+          name="_redirect"
+          value="https://jonahmaddox.co.uk/contact/thanks"
+        />
 
-      <div className="max-w-lg">
-        <form
-          action="https://formspree.io/f/your-form-id"
-          method="POST"
-          className="space-y-6"
+        <input
+          type="text"
+          name="name"
+          required
+          placeholder="Name"
+          className="w-full rounded-md border border-border bg-background px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-ring"
+        />
+
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="Email"
+          className="w-full rounded-md border border-border bg-background px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-ring"
+        />
+
+        <textarea
+          name="message"
+          rows={5}
+          required
+          placeholder="Message"
+          className="w-full rounded-md border border-border bg-background px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-ring"
+        />
+
+        <button
+          type="submit"
+          className="mt-2 inline-flex items-center rounded-md bg-foreground px-5 py-2.5 text-sm font-normal text-background hover:opacity-90"
         >
-          <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              type="text"
-              id="name"
-              name="name"
-              required
-              placeholder="Your name"
-              className="bg-card"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              required
-              placeholder="your@email.com"
-              className="bg-card"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="message">Message</Label>
-            <Textarea
-              id="message"
-              name="message"
-              rows={6}
-              required
-              placeholder="Tell me about your project..."
-              className="resize-none bg-card"
-            />
-          </div>
-
-          <Button type="submit" className="w-full sm:w-auto">
-            Send Message
-          </Button>
-        </form>
-      </div>
+          Send message
+        </button>
+      </form>
     </div>
   )
 }
