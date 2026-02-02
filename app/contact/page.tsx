@@ -14,9 +14,6 @@ export default function ContactPage() {
         If you’d like to get in touch about a project or collaboration, feel free
         to use the form below.
       </p>
-<p className="mb-4 rounded-md border border-border bg-muted px-3 py-2 text-xs text-foreground">
-  DEBUG CONTACT PAGE — action should be mjgoeloz
-</p>
       <form
         action="https://formspree.io/f/mjgoeloz"
         method="POST"
