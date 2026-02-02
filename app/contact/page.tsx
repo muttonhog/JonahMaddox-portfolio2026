@@ -56,6 +56,19 @@ export default function ContactPage() {
           Send message
         </button>
       </form>
+      <div className="mt-8 border-t border-border pt-6">
+        <p className="text-sm font-light text-muted-foreground">
+          Or find me on{" "}
+          <a
+            href="https://www.linkedin.com/in/jonahmaddox/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-4 hover:text-foreground"
+          >
+            LinkedIn
+          </a>
+          .
+        </p>
     </div>
   )
 }
