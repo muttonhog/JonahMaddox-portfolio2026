@@ -3,6 +3,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { getProjectBySlug, getAllProjectSlugs } from "@/app/content/projects"
 import { YouTubeEmbed, VimeoEmbed, SpotifyEmbed } from "@/components/embeds"
+import { GalleryLightbox } from "@/components/gallery-lightbox"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -106,7 +107,7 @@ export default async function ProjectPage({ params }: PageProps) {
               </section>
             )}
 
-            {/* Approach (between Challenge and Outcome) */}
+            {/* Approach */}
             {project.sections.approach && (
               <section>
                 <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
@@ -118,7 +119,7 @@ export default async function ProjectPage({ params }: PageProps) {
               </section>
             )}
 
-            {/* Inline primary media (now after Approach) */}
+            {/* Inline primary media */}
             {hasMedia(primary) && (
               <section>
                 <RenderMedia block={primary} title={project.title} />
@@ -139,7 +140,7 @@ export default async function ProjectPage({ params }: PageProps) {
           </>
         ) : (
           <>
-            {/* Non-featured: no sub-headers */}
+            {/* Non-featured projects: clean paragraphs */}
             {project.sections.context && (
               <section>
                 <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
@@ -182,7 +183,34 @@ export default async function ProjectPage({ params }: PageProps) {
           </>
         )}
 
-        {/* Secondary / supporting media (after Outcome) */}
+        {/* External links (e.g. App Store) */}
+        {project.links && project.links.length > 0 && (
+          <section>
+            <ul className="space-y-2">
+              {project.links.map((link) => (
+                <li key={link.url}>
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                  >
+                    {link.label} →
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* Image gallery with lightbox */}
+        {project.gallery && project.gallery.length > 0 && (
+          <section>
+            <GalleryLightbox images={project.gallery} />
+          </section>
+        )}
+
+        {/* Secondary / supporting media */}
         {hasMedia(secondary) && (
           <section>
             <RenderMedia block={secondary} title={project.title} />
