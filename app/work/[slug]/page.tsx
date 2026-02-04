@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import { getProjectBySlug, getAllProjectSlugs } from "@/app/content/projects"
 import { YouTubeEmbed, VimeoEmbed, SpotifyEmbed } from "@/components/embeds"
 import { GalleryLightbox } from "@/components/gallery-lightbox"
+import { CompactVideoGrid } from "@/components/compact-video-grid"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -14,7 +15,9 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }))
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params
   const project = getProjectBySlug(slug)
 
@@ -34,11 +37,8 @@ type MediaBlock = {
 
 type InlineAfter = "context" | "challenge" | "approach" | "outcome"
 
-type InlineEmbedBlock = {
+type InlineEmbedBlock = MediaBlock & {
   after: InlineAfter
-  youtubeIds?: string[]
-  vimeoIds?: string[]
-  spotifyEmbed?: boolean
 }
 
 type ContentBlock =
@@ -73,29 +73,45 @@ function RenderMedia({ block, title }: { block?: MediaBlock; title: string }) {
   )
 }
 
+/**
+ * Special-case renderer:
+ * - commercials → CompactVideoGrid
+ * - everything else → normal embeds
+ */
+function RenderSecondaryMedia({
+  projectSlug,
+  block,
+  title,
+}: {
+  projectSlug: string
+  block?: MediaBlock
+  title: string
+}) {
+  if (!hasMedia(block)) return null
+
+  if (projectSlug === "commercials" && block?.youtubeIds?.length) {
+    return <CompactVideoGrid youtubeIds={block.youtubeIds} title={title} />
+  }
+
+  return <RenderMedia block={block} title={title} />
+}
+
 function getInlineEmbeds(project: any, after: InlineAfter): MediaBlock | null {
   const list: InlineEmbedBlock[] | undefined = project.inlineEmbeds
-  if (!list || list.length === 0) return null
+  if (!list?.length) return null
 
   const blocks = list.filter((b) => b.after === after)
   if (!blocks.length) return null
 
-  const youtubeIds = blocks.flatMap((b) => b.youtubeIds ?? [])
-  const vimeoIds = blocks.flatMap((b) => b.vimeoIds ?? [])
-  const spotifyEmbed = blocks.some((b) => b.spotifyEmbed)
-
-  const merged: MediaBlock = {}
-  if (youtubeIds.length) merged.youtubeIds = youtubeIds
-  if (vimeoIds.length) merged.vimeoIds = vimeoIds
-  if (spotifyEmbed) merged.spotifyEmbed = true
+  const merged: MediaBlock = {
+    youtubeIds: blocks.flatMap((b) => b.youtubeIds ?? []),
+    vimeoIds: blocks.flatMap((b) => b.vimeoIds ?? []),
+    spotifyEmbed: blocks.some((b) => b.spotifyEmbed),
+  }
 
   return hasMedia(merged) ? merged : null
 }
 
-/**
- * OPTION B: Render ordered "content blocks" when project.content exists.
- * This enables: text -> video -> text -> gallery -> video, etc.
- */
 function RenderBlocks({
   blocks,
   title,
@@ -106,8 +122,6 @@ function RenderBlocks({
   return (
     <div className="space-y-12">
       {blocks.map((block, idx) => {
-        if (!block) return null
-
         switch (block.type) {
           case "text":
             return (
@@ -120,23 +134,19 @@ function RenderBlocks({
 
           case "youtube":
             return (
-              <section key={idx}>
-                <div className="space-y-6">
-                  {(block.ids ?? []).map((id) => (
-                    <YouTubeEmbed key={id} id={id} title={title} />
-                  ))}
-                </div>
+              <section key={idx} className="space-y-6">
+                {block.ids.map((id) => (
+                  <YouTubeEmbed key={id} id={id} title={title} />
+                ))}
               </section>
             )
 
           case "vimeo":
             return (
-              <section key={idx}>
-                <div className="space-y-6">
-                  {(block.ids ?? []).map((id) => (
-                    <VimeoEmbed key={id} id={id} title={title} />
-                  ))}
-                </div>
+              <section key={idx} className="space-y-6">
+                {block.ids.map((id) => (
+                  <VimeoEmbed key={id} id={id} title={title} />
+                ))}
               </section>
             )
 
@@ -150,7 +160,7 @@ function RenderBlocks({
           case "gallery":
             return (
               <section key={idx}>
-                <GalleryLightbox images={(block.images ?? []) as any} />
+                <GalleryLightbox images={block.images} />
               </section>
             )
 
@@ -158,7 +168,7 @@ function RenderBlocks({
             return (
               <section key={idx}>
                 <ul className="space-y-2">
-                  {(block.links ?? []).map((link: any) => (
+                  {block.links.map((link) => (
                     <li key={link.url}>
                       <a
                         href={link.url}
@@ -192,18 +202,15 @@ export default async function ProjectPage({ params }: PageProps) {
   const primary = project.embeds?.primary
   const secondary = project.embeds?.secondary
 
-  // Inline blocks (Option A)
   const inlineAfterContext = getInlineEmbeds(project, "context")
   const inlineAfterChallenge = getInlineEmbeds(project, "challenge")
   const inlineAfterApproach = getInlineEmbeds(project, "approach")
   const inlineAfterOutcome = getInlineEmbeds(project, "outcome")
 
-  // Option B (content blocks)
-  const hasBlocks = Boolean(project.content && project.content.length > 0)
+  const hasBlocks = Boolean(project.content?.length)
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 md:py-16 lg:py-20">
-      {/* Header */}
       <header className="mb-8">
         <h1 className="text-3xl font-medium tracking-tight text-foreground md:text-4xl lg:text-5xl">
           {project.title}
@@ -215,223 +222,123 @@ export default async function ProjectPage({ params }: PageProps) {
 
       <hr className="mb-12 border-border" />
 
-      {/* If content blocks exist, render them instead of the section layout */}
       {hasBlocks ? (
-        <div className="space-y-12">
-          <RenderBlocks blocks={project.content as ContentBlock[]} title={project.title} />
-
-          {/* Still allow secondary media at the very end if you want */}
-          {hasMedia(secondary) && (
-            <section>
-              <RenderMedia block={secondary} title={project.title} />
-            </section>
-          )}
-        </div>
+        <RenderBlocks blocks={project.content} title={project.title} />
       ) : (
         <div className="space-y-12">
-          {isFeatured ? (
-            <>
-              {/* Context */}
-              {project.sections.context && (
-                <section>
-                  <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-                    Context
-                  </h2>
-                  <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
-                    {project.sections.context}
-                  </p>
-                </section>
-              )}
-
-              {inlineAfterContext && (
-                <section>
-                  <RenderMedia block={inlineAfterContext} title={project.title} />
-                </section>
-              )}
-
-              {/* Challenge */}
-              {project.sections.challenge && (
-                <section>
-                  <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-                    Challenge
-                  </h2>
-                  <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
-                    {project.sections.challenge}
-                  </p>
-                </section>
-              )}
-
-              {inlineAfterChallenge && (
-                <section>
-                  <RenderMedia
-                    block={inlineAfterChallenge}
-                    title={project.title}
-                  />
-                </section>
-              )}
-
-              {/* Approach */}
-              {project.sections.approach && (
-                <section>
-                  <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-                    Approach
-                  </h2>
-                  <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
-                    {project.sections.approach}
-                  </p>
-                </section>
-              )}
-
-              {inlineAfterApproach && (
-                <section>
-                  <RenderMedia
-                    block={inlineAfterApproach}
-                    title={project.title}
-                  />
-                </section>
-              )}
-
-              {/* Inline primary media */}
-              {hasMedia(primary) && (
-                <section>
-                  <RenderMedia block={primary} title={project.title} />
-                </section>
-              )}
-
-              {/* Outcome */}
-              {project.sections.outcome && (
-                <section>
-                  <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
-                    Outcome
-                  </h2>
-                  <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
-                    {project.sections.outcome}
-                  </p>
-                </section>
-              )}
-
-              {inlineAfterOutcome && (
-                <section>
-                  <RenderMedia block={inlineAfterOutcome} title={project.title} />
-                </section>
-              )}
-            </>
-          ) : (
-            <>
-              {/* Non-featured projects: clean paragraphs */}
-              {project.sections.context && (
-                <section>
-                  <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
-                    {project.sections.context}
-                  </p>
-                </section>
-              )}
-
-              {inlineAfterContext && (
-                <section>
-                  <RenderMedia block={inlineAfterContext} title={project.title} />
-                </section>
-              )}
-
-              {project.sections.challenge && (
-                <section>
-                  <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
-                    {project.sections.challenge}
-                  </p>
-                </section>
-              )}
-
-              {inlineAfterChallenge && (
-                <section>
-                  <RenderMedia
-                    block={inlineAfterChallenge}
-                    title={project.title}
-                  />
-                </section>
-              )}
-
-              {project.sections.approach && (
-                <section>
-                  <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
-                    {project.sections.approach}
-                  </p>
-                </section>
-              )}
-
-              {inlineAfterApproach && (
-                <section>
-                  <RenderMedia
-                    block={inlineAfterApproach}
-                    title={project.title}
-                  />
-                </section>
-              )}
-
-              {project.sections.outcome && (
-                <section>
-                  <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
-                    {project.sections.outcome}
-                  </p>
-                </section>
-              )}
-
-              {inlineAfterOutcome && (
-                <section>
-                  <RenderMedia block={inlineAfterOutcome} title={project.title} />
-                </section>
-              )}
-
-              {project.sections.learnings && (
-                <section>
-                  <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
-                    {project.sections.learnings}
-                  </p>
-                </section>
-              )}
-            </>
-          )}
-
-          {/* External links (e.g. App Store) */}
-          {project.links && project.links.length > 0 && (
+          {project.sections.context && (
             <section>
-              <ul className="space-y-2">
-                {project.links.map((link: any) => (
-                  <li key={link.url}>
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
-                    >
-                      {link.label} →
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              {isFeatured && (
+                <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+                  Context
+                </h2>
+              )}
+              <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                {project.sections.context}
+              </p>
             </section>
           )}
 
-          {/* Image gallery with lightbox */}
-          {project.gallery && project.gallery.length > 0 && (
+          {inlineAfterContext && (
+            <RenderMedia block={inlineAfterContext} title={project.title} />
+          )}
+
+          {project.sections.challenge && (
             <section>
-              <GalleryLightbox images={project.gallery} />
+              {isFeatured && (
+                <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+                  Challenge
+                </h2>
+              )}
+              <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                {project.sections.challenge}
+              </p>
             </section>
           )}
 
-          {/* Secondary / supporting media */}
-          {hasMedia(secondary) && (
+          {inlineAfterChallenge && (
+            <RenderMedia block={inlineAfterChallenge} title={project.title} />
+          )}
+
+          {project.sections.approach && (
             <section>
-              <RenderMedia block={secondary} title={project.title} />
+              {isFeatured && (
+                <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+                  Approach
+                </h2>
+              )}
+              <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                {project.sections.approach}
+              </p>
             </section>
+          )}
+
+          {inlineAfterApproach && (
+            <RenderMedia block={inlineAfterApproach} title={project.title} />
+          )}
+
+          {hasMedia(primary) && (
+            <RenderMedia block={primary} title={project.title} />
+          )}
+
+          {project.sections.outcome && (
+            <section>
+              {isFeatured && (
+                <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+                  Outcome
+                </h2>
+              )}
+              <p className="whitespace-pre-line text-base leading-relaxed text-foreground">
+                {project.sections.outcome}
+              </p>
+            </section>
+          )}
+
+          {inlineAfterOutcome && (
+            <RenderMedia block={inlineAfterOutcome} title={project.title} />
           )}
         </div>
       )}
 
-      {/* Back Link */}
+      {project.links?.length > 0 && (
+        <section className="mt-12">
+          <ul className="space-y-2">
+            {project.links.map((link) => (
+              <li key={link.url}>
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                >
+                  {link.label} →
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {project.gallery?.length > 0 && (
+        <section className="mt-12">
+          <GalleryLightbox images={project.gallery} />
+        </section>
+      )}
+
+      {hasMedia(secondary) && (
+        <section className="mt-12">
+          <RenderSecondaryMedia
+            projectSlug={project.slug}
+            block={secondary}
+            title={project.title}
+          />
+        </section>
+      )}
+
       <div className="mt-16 border-t border-border pt-8">
         <Link
           href="/work"
-          className="text-sm text-muted-foreground transition-opacity duration-150 hover:opacity-70"
+          className="text-sm text-muted-foreground hover:opacity-70"
         >
           &larr; Back to work
         </Link>

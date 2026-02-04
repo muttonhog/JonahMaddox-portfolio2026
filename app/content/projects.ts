@@ -504,6 +504,8 @@ This included work around shows such as Black Mirror and The Dark Crystal, where
         "Ll4ecuvHDq0",
         "VEeH7mPWvUI",
         "omc-5zj70M0",
+        "MhAQbevgngo",
+        "gn-R-vBODR0",
         "atOvR0h6xrw",
         "XJLmiWzbnBg",
         "oJ2cPYsvxAg",
@@ -556,51 +558,149 @@ The approach established a lightweight model for documenting internal programmes
     tags: ["Campaign", "Research Programmes", "Public Engagement"],
   },
 
-  {
-    title: "Commercials",
-    slug: "commercials",
-    year: "2008–2019",
-    org: "Various",
-    role: "Editor",
-    featured: false,
-    thumbnail: "/thumbnails/ads.jpg",
-    description: "A selection of commercial edits across agencies and brands.",
-    sections: {
-      challenge:
-        "Deliver sharp, message-forward storytelling under tight timelines and feedback cycles.",
-      approach:
-        "Worked fast, kept decisions clear, and focused on pace, structure and brand tone.",
-      outcome:
-        "Delivered broadcast and social cuts across multiple campaigns.",
-    },
-    tags: ["Commercial", "Editing", "Branded Content"],
+ {
+  title: "Commercials",
+  slug: "commercials",
+  year: "2008–2019",
+  org: "Various",
+  role: "Editor",
+  featured: false,
+  thumbnail: "/thumbnails/ads.jpg",
+  description:
+    "Editing television, cinema and digital commercials across agencies and global brands.",
+
+  sections: {
+    approach: `
+I spent several years editing television, cinema and digital commercials, working across music-led spots, brand films and large-scale campaigns.
+
+My commercial work grew out of music videos and live sessions, leading to early projects on music TV advertising for artists including Beyoncé, Mumford & Sons and Led Zeppelin while at Fold7. During this period, I also worked on major brand campaigns such as the Carlsberg rebrand, helping translate musical energy and performance-led storytelling into commercial formats.
+
+After moving freelance, I edited campaigns for a wide range of brands at agencies including Karmarama, Ogilvy, Iris, Mother, Havas and Imagination.
+
+Across this work, I focused on clarity, pacing and tone — shaping films that could cut through in short formats while still serving brand strategy and creative intent.
+    `.trim(),
   },
 
-  {
-    title: "Branded Content",
-    slug: "branded",
-    year: "2008–2019",
-    org: "Various",
-    role: "Director & Editor",
-    featured: false,
-    thumbnail: "/thumbnails/branded.jpg",
-    description: "A selection of commercial edits across agencies and brands.",
-    sections: {
-      challenge:
-        "Deliver sharp, message-forward storytelling under tight timelines and feedback cycles.",
-      approach:
-        "Worked fast, kept decisions clear, and focused on pace, structure and brand tone.",
-      outcome:
-        "Delivered broadcast and social cuts across multiple campaigns.",
+  embeds: {
+    secondary: {
+      youtubeIds: [
+        "IVekZisN_1w",
+        "bYnVyA06TCI",
+        "ToBDOLgcEls",
+        "QzPDfnkxvJA",
+        "Vtb8cG3gcaw",
+        "DX2nuvjhMjk",
+        "djqapLuyIaA",
+        "QzUWLk_fWZU",
+        "pMSCeHHPbjQ",
+        "vlOcgnwYCyY",
+        "iZZ7cdoXkLk",
+        "z98FXaYu0Po",
+        "J96HwwcKMQs",
+        "8Bucn8DJtJI",
+        "47RG21QALwA",
+      ],
     },
-    embeds: {
-      secondary: {
-        youtubeIds: ["YOUTUBE_VIDEO_ID_HERE"],
-        vimeoIds: ["VIMEO_VIDEO_ID_HERE"],
-      },
-    },
-    tags: ["Commercial", "Editing", "Branded Content"],
   },
+
+  tags: ["Commercial", "Editing", "Advertising"],
+},
+
+
+{
+  title: "Branded Content",
+  slug: "branded",
+  year: "2008–2019",
+  org: "Various",
+  role: "Director & Editor",
+  featured: false,
+  thumbnail: "/thumbnails/branded.jpg",
+  description:
+    "Story-led branded films created for agencies and global brands, focused on audience-first engagement rather than direct advertising.",
+
+  // Leave sections empty – we’re using content blocks instead
+  sections: {},
+
+  content: [
+    {
+      type: "text",
+      value: `
+I approach branded content as a form of storytelling rather than advertising. The most effective brand work, in my experience, earns attention by entertaining, informing or surprising an audience — allowing the brand to build credibility and affinity without relying on direct sales messaging.
+      `.trim(),
+    },
+
+    {
+      type: "text",
+      value: `
+Across this work, I’ve operated primarily as an editor, with selected projects also directed by me. In both roles, I work closely with agencies, directors and brand teams to shape material that aligns with brand strategy while remaining culturally aware, engaging and platform-appropriate.
+      `.trim(),
+    },
+
+    // Director-led branded work
+    {
+      type: "text",
+      value: `
+As a director, I’ve worked with brands including Rolls-Royce, Maille Mustard, Greenpeace and Curvy Kate. This included creating upbeat, confidence-led fashion content and launching *Star in a Bra* — a campaign that invited customers to become models for the brand. The focus was on representation and empowerment, helping the brand connect with its audience in an authentic and inclusive way.
+      `.trim(),
+    },
+    {
+      type: "youtube",
+      ids: ["Ttf_IcVfbcA"], // Curvy Kate / Star in a Bra
+    },
+
+    // Shell – Everyday Experts
+    {
+      type: "text",
+      value: `
+As an editor, I worked on Shell’s *Everyday Experts* series, directed by Paul Berczeller, using humour and character to translate complex technical processes into accessible, shareable content.
+      `.trim(),
+    },
+    {
+      type: "youtube",
+      ids: ["Hf_nds6e84A", "R2PS00fEbJ8"],
+    },
+
+    // British Army branded films
+    {
+      type: "text",
+      value: `
+I’ve also edited action-led branded films for the British Army, where tone, clarity and pacing were critical to maintaining credibility and trust.
+      `.trim(),
+    },
+    {
+      type: "youtube",
+      ids: ["lstn3wOEO08", "JdHkElXZePE"],
+    },
+
+    // Sony / DGK / Nyjah Huston
+    {
+      type: "text",
+      value: `
+In addition, I edited branded content for Sony, including a collaboration with DGG and professional skateboarder Neen Williams, bringing cultural awareness and editorial precision to work aimed at highly engaged niche audiences.
+      `.trim(),
+    },
+    {
+      type: "youtube",
+      ids: ["kqTpgOtKbPE"],
+    },
+
+    // Wrap / additional work
+    {
+      type: "text",
+      value: `
+Across all branded projects, my focus is on shaping content that audiences choose to engage with — ensuring brands are represented with clarity, consistency and intent. The goal is work that performs because it resonates, not because it interrupts.
+      `.trim(),
+    },
+    {
+      type: "youtube",
+      ids: ["y77S-baMITQ", "NeQuER6GO2s", "qwL1-zZ7-jI", "ziP37-P4hw4"],
+    },
+  ],
+
+
+  tags: ["Branded Content", "Direction", "Editing", "Commercial Storytelling"],
+},
+
 
   {
     title: "Tell Moi",
