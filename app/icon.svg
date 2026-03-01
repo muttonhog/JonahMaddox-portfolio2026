@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 512 512">
+  <!-- Generator: Adobe Illustrator 30.2.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        font-family: Chorine-Large, Chorine;
+        font-size: 549.66px;
+      }
+
+      .st0, .st1 {
+        display: none;
+      }
+
+      .st2 {
+        fill: #fff;
+      }
+
+      .st3 {
+        fill: #2a7796;
+      }
+    </style>
+  </defs>
+  <g id="Layer_2">
+    <rect class="st3" x="-6.2" y="-6.2" width="524.39" height="524.39"/>
+  </g>
+  <g id="Layer_1">
+    <text class="st0" transform="translate(153.3 494.11)"><tspan x="0" y="0">J</tspan></text>
+    <g class="st1">
+      <polyline points="343.75 151.08 343.75 22.17 302.12 54.94 343.75 54.94 280.88 89.17 334.4 89.17 334.4 151.08"/>
+      <polyline points="343.75 151.08 343.75 22.17 385.38 54.94 343.75 54.94 406.62 89.17 353.1 89.17 353.1 151.08"/>
+    </g>
+    <g>
+      <path class="st2" d="M148.46,434.45l29.35-28.24c21.04,32.11,49.83,47.62,78.07,47.62,51.49,0,74.75-26.02,74.75-85.82v-204.31h-151.71v-39.31h198.78v247.5c0,67.55-30.45,122.92-120.71,122.92-40.42,0-83.05-18.83-108.52-60.35Z"/>
+      <g>
+        <rect class="st2" x="358.42" y="91.76" width="19.25" height="32.62"/>
+        <rect class="st2" x="328.24" y="68.45" width="79.6" height="21.45" rx="9.76" ry="9.76"/>
+        <rect class="st2" x="339.21" y="45.4" width="57.66" height="20.45" rx="9.76" ry="9.76"/>
+        <rect class="st2" x="349.23" y="23.85" width="37.63" height="18.47" rx="9.23" ry="9.23"/>
+      </g>
+    </g>
+  </g>
+</svg>

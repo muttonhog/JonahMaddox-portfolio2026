@@ -1,11 +1,9 @@
 import Link from "next/link"
 import Image from "next/image"
-import { projects } from "@/app/content/projects"
+import { getMoreProjects } from "@/app/content/projects"
 
 export function MoreProjects() {
-  const more = projects
-    .filter((project) => project.featured === false)
-    .slice(0, 8)
+  const more = getMoreProjects().slice(0, 8)
 
   return (
     <section className="pb-8">

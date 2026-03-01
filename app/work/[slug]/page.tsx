@@ -44,28 +44,35 @@ type InlineEmbedBlock = MediaBlock & {
 type ContentBlock =
   | { type: "text"; value: string }
   | { type: "youtube"; ids: string[] }
+  | { type: "youtubeWall"; ids: string[]; title?: string }
   | { type: "vimeo"; ids: string[] }
   | { type: "spotify" }
   | { type: "gallery"; images: any[] }
   | { type: "links"; links: any[] }
 
+function cleanIds(ids: string[] | undefined) {
+  return (ids ?? []).map((s) => s.trim()).filter(Boolean)
+}
+
 function hasMedia(block?: MediaBlock) {
-  return Boolean(
-    (block?.youtubeIds && block.youtubeIds.length > 0) ||
-      (block?.vimeoIds && block.vimeoIds.length > 0) ||
-      block?.spotifyEmbed
-  )
+  const yt = cleanIds(block?.youtubeIds)
+  const vm = cleanIds(block?.vimeoIds)
+
+  return Boolean(yt.length > 0 || vm.length > 0 || block?.spotifyEmbed)
 }
 
 function RenderMedia({ block, title }: { block?: MediaBlock; title: string }) {
   if (!hasMedia(block)) return null
 
+  const youtubeIds = cleanIds(block?.youtubeIds)
+  const vimeoIds = cleanIds(block?.vimeoIds)
+
   return (
     <div className="space-y-6">
-      {block?.youtubeIds?.map((id) => (
+      {youtubeIds.map((id) => (
         <YouTubeEmbed key={id} id={id} title={title} />
       ))}
-      {block?.vimeoIds?.map((id) => (
+      {vimeoIds.map((id) => (
         <VimeoEmbed key={id} id={id} title={title} />
       ))}
       {block?.spotifyEmbed && <SpotifyEmbed />}
@@ -74,23 +81,25 @@ function RenderMedia({ block, title }: { block?: MediaBlock; title: string }) {
 }
 
 /**
- * Special-case renderer:
- * - commercials → CompactVideoGrid
- * - everything else → normal embeds
+ * Secondary media renderer:
+ * - if project.layout === "videoWall" → CompactVideoGrid (YouTube only)
+ * - otherwise → normal stacked embeds
  */
 function RenderSecondaryMedia({
-  projectSlug,
+  layout,
   block,
   title,
 }: {
-  projectSlug: string
+  layout?: string
   block?: MediaBlock
   title: string
 }) {
   if (!hasMedia(block)) return null
 
-  if (projectSlug === "commercials" && block?.youtubeIds?.length) {
-    return <CompactVideoGrid youtubeIds={block.youtubeIds} title={title} />
+  const youtubeIds = cleanIds(block?.youtubeIds)
+
+  if (layout === "videoWall" && youtubeIds.length) {
+    return <CompactVideoGrid youtubeIds={youtubeIds} title={title} />
   }
 
   return <RenderMedia block={block} title={title} />
@@ -108,6 +117,10 @@ function getInlineEmbeds(project: any, after: InlineAfter): MediaBlock | null {
     vimeoIds: blocks.flatMap((b) => b.vimeoIds ?? []),
     spotifyEmbed: blocks.some((b) => b.spotifyEmbed),
   }
+
+  // Ensure empty strings don’t count as “media”
+  merged.youtubeIds = cleanIds(merged.youtubeIds)
+  merged.vimeoIds = cleanIds(merged.vimeoIds)
 
   return hasMedia(merged) ? merged : null
 }
@@ -132,23 +145,45 @@ function RenderBlocks({
               </section>
             )
 
-          case "youtube":
+          case "youtube": {
+            const ids = cleanIds(block.ids)
+            if (!ids.length) return null
+
             return (
               <section key={idx} className="space-y-6">
-                {block.ids.map((id) => (
+                {ids.map((id) => (
                   <YouTubeEmbed key={id} id={id} title={title} />
                 ))}
               </section>
             )
+          }
 
-          case "vimeo":
+          case "youtubeWall": {
+            const ids = cleanIds(block.ids)
+            if (!ids.length) return null
+
             return (
               <section key={idx} className="space-y-6">
-                {block.ids.map((id) => (
+                <CompactVideoGrid
+                  youtubeIds={ids}
+                  title={block.title ?? title}
+                />
+              </section>
+            )
+          }
+
+          case "vimeo": {
+            const ids = cleanIds(block.ids)
+            if (!ids.length) return null
+
+            return (
+              <section key={idx} className="space-y-6">
+                {ids.map((id) => (
                   <VimeoEmbed key={id} id={id} title={title} />
                 ))}
               </section>
             )
+          }
 
           case "spotify":
             return (
@@ -223,7 +258,7 @@ export default async function ProjectPage({ params }: PageProps) {
       <hr className="mb-12 border-border" />
 
       {hasBlocks ? (
-        <RenderBlocks blocks={project.content} title={project.title} />
+        <RenderBlocks blocks={project.content as any} title={project.title} />
       ) : (
         <div className="space-y-12">
           {project.sections.context && (
@@ -328,7 +363,7 @@ export default async function ProjectPage({ params }: PageProps) {
       {hasMedia(secondary) && (
         <section className="mt-12">
           <RenderSecondaryMedia
-            projectSlug={project.slug}
+            layout={(project as any).layout}
             block={secondary}
             title={project.title}
           />
@@ -336,10 +371,7 @@ export default async function ProjectPage({ params }: PageProps) {
       )}
 
       <div className="mt-16 border-t border-border pt-8">
-        <Link
-          href="/work"
-          className="text-sm text-muted-foreground hover:opacity-70"
-        >
+        <Link href="/work" className="text-sm text-muted-foreground hover:opacity-70">
           &larr; Back to work
         </Link>
       </div>

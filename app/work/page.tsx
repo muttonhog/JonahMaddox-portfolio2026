@@ -7,17 +7,9 @@ export const metadata = {
   description: "Selected work by Jonah Maddox.",
 }
 
-function getLatestYear(year: string): number {
-  // Extract all 4-digit years and use the latest one
-  const matches = year.match(/\d{4}/g)
-  if (!matches) return 0
-  return Math.max(...matches.map((y) => Number(y)))
-}
-
 export default function WorkPage() {
-  const all = [...projects].sort(
-    (a, b) => getLatestYear(b.year) - getLatestYear(a.year)
-  )
+  // Manual order: exactly as written in projects.ts
+  const all = projects
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-12 md:py-16 lg:py-20">
@@ -30,7 +22,6 @@ export default function WorkPage() {
         </p>
       </header>
 
-      {/* Grid wrapper to keep 3-up feeling centred and intentional */}
       <section className="mx-auto max-w-4xl">
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-3">
           {all.map((project) => (

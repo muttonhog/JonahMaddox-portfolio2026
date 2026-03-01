@@ -24,9 +24,9 @@ export default function HomePage() {
 <section className="py-2">
   <figure className="mx-auto max-w-3xl">
     <blockquote className="text-balance text-lg font-normal italic leading-snug text-foreground md:text-xl">
-      “Good storytelling starts with the audience.
+      “Good storytelling is a conversation.
       <br />
-      What&apos;s said matters, but how it&apos;s received matters most.”
+      Meaning emerges in the back‑and‑forth, where listening matters as much as speaking.”
     </blockquote>
   </figure>
 </section>
