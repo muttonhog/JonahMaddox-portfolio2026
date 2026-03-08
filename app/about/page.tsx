@@ -4,7 +4,7 @@ import Image from "next/image"
 export const metadata: Metadata = {
   title: "About | Jonah",
   description:
-    "Jonah is a Public Engagement and Digital Content Manager working across video, motion and audio.",
+    "Jonah is a content production leader and storyteller working across video, audio and digital content.",
 }
 
 export default function AboutPage() {
@@ -27,49 +27,61 @@ export default function AboutPage() {
 
         {/* Bio */}
         <div className="space-y-6 text-base leading-relaxed text-foreground">
+          <header className="space-y-2">
+            <h1 className="text-3xl font-medium tracking-tight text-foreground md:text-4xl">
+              
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              
+            </p>
+          </header>
+
           <p className="text-lg font-medium">Hello.</p>
 
           <p>
-            I'm Jonah, a Public Engagement and Digital Content Manager working
-            across video, motion and audio, with a background spanning
-            broadcast, music, documentary and digital storytelling. I'm
-            particularly drawn to work that's thoughtful, engaging and capable
-            of driving positive change.
+            I'm Jonah, a content production leader and storyteller with twenty
+            years of experience making work that is clear, human and worth
+            people's time. I started out as an editor, and I have never really
+            stopped thinking like one. Whatever the project, I keep the audience
+            in mind from the first conversation to the final cut.
           </p>
 
           <p>
-            Probably because I started out as an editor, I've always seen it as
-            my role, whether I'm hands-on or not, to keep the audience in mind
-            throughout the process. Whatever the aims of the project, and
-            whether the subject is technical, moving or entertaining, I focus on
-            making work that feels clear, human and worth spending time with.
+            I currently lead video, audio and digital content at The Alan
+            Turing Institute, the UK's national institute for data science and
+            AI. My work spans public-facing films and podcasts, social content,
+            live event production and documentary storytelling for public,
+            industry and policy audiences. I conceived and produce Too Long
+            Didn't Read, a public engagement podcast on AI and technology,
+            writing and presenting more than twenty episodes in close
+            collaboration with researchers.
           </p>
 
           <p>
-            I currently work at The Alan Turing Institute, where I lead video
-            and audio content for public, industry and policy audiences across
-            multiple platforms. This includes films, social-first video, and
-            event coverage and live productions designed for different audiences
-            and contexts. Alongside this, I conceived and produced a public
-            engagement podcast from scratch, writing and producing over twenty
-            episodes in close collaboration with researchers on topics ranging
-            from digital death and AI in politics to misinformation and
-            communicating with animals using AI.
+            Before this I spent over a decade freelancing across broadcast,
+            documentary and digital content. I worked with the BBC, Netflix,
+            Disney, Greenpeace and a range of independent production companies,
+            often brought in to shape story and structure from complex material
+            and take projects through to delivery under pressure. The work has
+            ranged from a live Royal Wedding edit that became the BBC's most
+            viewed social clip of the year, to a Canal+ feature documentary
+            released in cinemas, and environmental films screened at
+            Glastonbury.
           </p>
 
           <p>
-            Before this, I spent over a decade freelancing across broadcast,
-            documentary and digital content, working with organisations
-            including the BBC, Netflix, Disney, Greenpeace and a range of
-            independent production companies. I was often brought in to help
-            shape story and structure from complex, real-world material, and to
-            take projects through to delivery under pressure.
+            I am particularly drawn to work rooted in public good: science
+            communication, research, environmental storytelling and social
+            change. I am currently completing a Creative Science Communication
+            and Public Engagement course at the University of the West of
+            England, and I think about how content builds trust and
+            understanding as much as how it looks and sounds.
           </p>
 
           <p>
-            When I'm not glued to my desk, you'll probably find me making music,
-            woodturning, running spoon-carving workshops or, occasionally, back
-            at my desk following various digital passion projects.
+            When I'm not at my desk you'll find me making music, woodturning,
+            running spoon-carving workshops or working on various digital
+            projects.
           </p>
 
           <p>
