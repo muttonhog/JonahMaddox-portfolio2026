@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import type { Metadata } from "next"
-import { getProjectBySlug, getAllProjectSlugs } from "@/app/content/projects"
+import { getProjectBySlug, getAllProjectSlugs, projects } from "@/app/content/projects"
 import { YouTubeEmbed, VimeoEmbed, SpotifyEmbed } from "@/components/embeds"
 import { GalleryLightbox } from "@/components/gallery-lightbox"
 import { CompactVideoGrid } from "@/components/compact-video-grid"
@@ -80,11 +80,6 @@ function RenderMedia({ block, title }: { block?: MediaBlock; title: string }) {
   )
 }
 
-/**
- * Secondary media renderer:
- * - if project.layout === "videoWall" → CompactVideoGrid (YouTube only)
- * - otherwise → normal stacked embeds
- */
 function RenderSecondaryMedia({
   layout,
   block,
@@ -118,7 +113,6 @@ function getInlineEmbeds(project: any, after: InlineAfter): MediaBlock | null {
     spotifyEmbed: blocks.some((b) => b.spotifyEmbed),
   }
 
-  // Ensure empty strings don’t count as “media”
   merged.youtubeIds = cleanIds(merged.youtubeIds)
   merged.vimeoIds = cleanIds(merged.vimeoIds)
 
@@ -164,10 +158,7 @@ function RenderBlocks({
 
             return (
               <section key={idx} className="space-y-6">
-                <CompactVideoGrid
-                  youtubeIds={ids}
-                  title={block.title ?? title}
-                />
+                <CompactVideoGrid youtubeIds={ids} title={block.title ?? title} />
               </section>
             )
           }
@@ -227,6 +218,34 @@ function RenderBlocks({
   )
 }
 
+function RenderImpactMetrics({
+  metrics,
+}: {
+  metrics?: { value: string; label: string }[]
+}) {
+  if (!metrics?.length) return null
+
+  return (
+    <section>
+      <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+        Impact
+      </h2>
+      <div className="grid grid-cols-1 gap-px border border-border bg-border sm:grid-cols-2">
+        {metrics.map((metric) => (
+          <div key={`${metric.value}-${metric.label}`} className="bg-background p-5">
+            <div className="text-2xl font-medium tracking-tight text-foreground md:text-3xl">
+              {metric.value}
+            </div>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              {metric.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 export default async function ProjectPage({ params }: PageProps) {
   const { slug } = await params
   const project = getProjectBySlug(slug)
@@ -234,6 +253,14 @@ export default async function ProjectPage({ params }: PageProps) {
   if (!project) notFound()
 
   const isFeatured = project.featured === true
+
+  const featuredProjects = projects.filter((p) => p.featured)
+  const currentIndex = featuredProjects.findIndex((p) => p.slug === slug)
+  const nextProject =
+    currentIndex >= 0
+      ? featuredProjects[(currentIndex + 1) % featuredProjects.length]
+      : null
+
   const primary = project.embeds?.primary
   const secondary = project.embeds?.secondary
 
@@ -332,6 +359,8 @@ export default async function ProjectPage({ params }: PageProps) {
           {inlineAfterOutcome && (
             <RenderMedia block={inlineAfterOutcome} title={project.title} />
           )}
+
+          <RenderImpactMetrics metrics={project.impactMetrics} />
         </div>
       )}
 
@@ -370,10 +399,19 @@ export default async function ProjectPage({ params }: PageProps) {
         </section>
       )}
 
-      <div className="mt-16 border-t border-border pt-8">
+      <div className="mt-16 flex items-center justify-between border-t border-border pt-8">
         <Link href="/work" className="text-sm text-muted-foreground hover:opacity-70">
-          &larr; Back to work
+          ← Back to work
         </Link>
+
+        {isFeatured && nextProject && (
+          <Link
+            href={`/work/${nextProject.slug}`}
+            className="text-sm text-foreground underline underline-offset-4 hover:opacity-70"
+          >
+            Next case study →
+          </Link>
+        )}
       </div>
     </div>
   )

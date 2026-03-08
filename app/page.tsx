@@ -4,8 +4,15 @@ import { MoreProjects } from "@/components/more-projects"
 export default function HomePage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-12 md:py-16 lg:py-20">
-   
-<hr className="mb-8 border-border" />
+
+      {/* Intro line */}
+      <section className="mb-8 max-w-2xl">
+        <p className="text-lg leading-relaxed text-foreground md:text-xl">
+          Digital content and public engagement for research organisations, broadcasters and mission-led brands.
+        </p>
+      </section>
+
+      <hr className="mb-8 border-border" />
 
       {/* Case studies label */}
       <section>
@@ -20,24 +27,23 @@ export default function HomePage() {
       {/* Divider */}
       <hr className="my-12 border-border md:my-14" />
 
-     {/* Quote section */}
-<section className="py-2">
-  <figure className="mx-auto max-w-3xl">
-    <blockquote className="text-balance text-lg font-normal italic leading-snug text-foreground md:text-xl">
-      “Good storytelling is a conversation.
-      <br />
-      Meaning emerges in the back‑and‑forth, where listening matters as much as speaking.”
-    </blockquote>
-  </figure>
-</section>
-
-
+      {/* Quote section */}
+      <section className="py-2">
+        <figure className="mx-auto max-w-3xl">
+          <blockquote className="text-balance text-lg font-normal italic leading-snug text-foreground md:text-xl">
+            “Good storytelling is a conversation.
+            <br />
+            Meaning emerges in the back-and-forth, where listening matters as much as speaking.”
+          </blockquote>
+        </figure>
+      </section>
 
       {/* Divider */}
       <hr className="my-12 border-border md:my-14" />
 
       {/* More Work */}
       <MoreProjects />
+
     </div>
   )
 }

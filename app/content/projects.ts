@@ -28,10 +28,11 @@ export type GalleryImage = {
   caption?: string
 }
 
-/**
- * OPTION B: ordered content blocks for "article-style" pages
- * You can mix text, embeds, gallery, and links in any order.
- */
+export type ImpactMetric = {
+  value: string
+  label: string
+}
+
 export type ContentBlock =
   | { type: "text"; value: string }
   | { type: "youtube"; ids: string[] }
@@ -41,7 +42,6 @@ export type ContentBlock =
   | { type: "gallery"; images: GalleryImage[] }
   | { type: "links"; links: ProjectLink[] }
 
-// Layout selector for special renderers
 export type ProjectLayout = "default" | "videoWall"
 
 export interface Project {
@@ -54,10 +54,8 @@ export interface Project {
   thumbnail: string
   description: string
 
-  // Optional layout override (e.g. commercials / tree tuesday)
   layout?: ProjectLayout
 
-  // Default section system
   sections: {
     context?: string
     challenge?: string
@@ -66,21 +64,19 @@ export interface Project {
     learnings?: string
   }
 
-  // Two-block media support (featured pages)
   embeds?: {
     primary?: MediaBlock
     secondary?: MediaBlock
   }
 
-  // (Option A) Inline embeds after a named section
   inlineEmbeds?: InlineEmbedBlock[]
 
-  // Existing fields used by your page
   links?: ProjectLink[]
   gallery?: GalleryImage[]
 
-  // (Option B) Ordered content blocks
   content?: ContentBlock[]
+
+  impactMetrics?: ImpactMetric[]
 
   tags?: string[]
 }
@@ -129,10 +125,10 @@ After the pilot was commissioned, I became the project lead for the series. My r
 In the second series, the podcast moved to a monthly release and introduced guest contributors. Each episode looked into three current news stories covering one story with the expert guest in more detail. Our topics ranged from digital death and online remains, to AI-generated politicians, misinformation and the “dead internet” theory.
       `.trim(),
       outcome: `
-Over two series, Too Long Didn’t Read grew an audience of more than 5,000 listeners and viewers, and became one of the Institute’s most recognisable public-facing formats.
+Over two series, Too Long Didn’t Read grew a steadily engaged audience and became one of the Institute’s most recognisable public-facing formats.
 
 The project helped establish new ways of working within the organisation, including:
-• Using YouTube Shorts, Podcasts and Community posts for audience engagement
+• Using YouTube Shorts, podcasts and Community posts for audience engagement
 • Integrating podcast content into wider campaigns and live events
 • Building relationships with external partners, universities and media organisations, including the BBC
 
@@ -141,6 +137,12 @@ The podcast also expanded the Institute’s public engagement toolkit, demonstra
 Leading Too Long Didn’t Read strengthened my skills in editorial judgement, interviewing and science-accurate storytelling. It also reinforced the value of slow, considered content in fast-moving news cycles — and the role digital content can play in helping people feel informed rather than overwhelmed.
       `.trim(),
     },
+    impactMetrics: [
+      { value: "5,725", label: "Total downloads" },
+      { value: "2,585", label: "Peak-year downloads (2024)" },
+      { value: "+71%", label: "Year-on-year growth, 2023–2024" },
+      { value: "221", label: "2026 downloads to date" },
+    ],
     embeds: {
       primary: { spotifyEmbed: true },
       secondary: { youtubeIds: ["xf7NfV5cNLM", "WjSy8frfOe8"] },
@@ -180,13 +182,19 @@ During the conference, I directed live streams and on-site crews, problem-solvin
 Alongside core event coverage, I recorded interviews on the conference floor with speakers and guests for future marketing use, as well as producing a special Too Long Didn’t Read AI UK episode. Editorial decisions consistently prioritised inclusivity, accessibility, tone and audience trust — including careful handling of sensitive topics and ensuring members of the defence community were not filmed for security reasons.
       `.trim(),
       outcome: `
-Across AI UK 2023, 2024 and 2025, the video output supported thousands of attendees on site and online, extending the reach and lifespan of the exhibition well beyond the live event.
+Across AI UK 2023, 2024 and 2025, the video output supported thousands of attendees on site and online, extending the reach and lifespan of the event well beyond the live dates.
 
 The work ensured that complex research and policy discussions were presented clearly and responsibly, while creating a substantial, reusable library of content for ongoing communications, promotion and ecosystem engagement. Video content throughout the venue brought the event screens to life, giving the conference a more premium feel and enabling clearer messaging through elements such as animated maps and floor plans.
 
 The programme also provided a platform to introduce new brand touchpoints, including the launch of Turing 2.0, strengthening visibility and coherence across the event. More broadly, the work reinforced the Turing's position as a trusted convener and thought leader within the science and AI ecosystem, reflecting the diversity of its audiences and contributors. The approach helped establish repeatable workflows for delivering large-scale hybrid events across the organisation.
       `.trim(),
     },
+    impactMetrics: [
+      { value: "3", label: "Years of consecutive delivery" },
+      { value: "100+", label: "Session recordings edited and published" },
+      { value: "Thousands", label: "Attendees reached on-site and online" },
+      { value: "1", label: "Flagship conference led end-to-end" },
+    ],
     embeds: {
       primary: { youtubeIds: ["ZH4JsZDrRRc"] },
       secondary: { youtubeIds: ["4t8Po6cWFm4", "Dr1MghBqBFo", "U-xwkcuTCT0"] },
@@ -238,6 +246,12 @@ More broadly, the work proved that daily BBC programming could be reinterpreted 
 Following this work, the BBC recommended me directly to Netflix, where I went on to support the development of its UK digital content strategy the following year.
       `.trim(),
     },
+    impactMetrics: [
+      { value: "18M+", label: "Views on the Royal Wedding film" },
+      { value: "No.1", label: "BBC’s most viewed clip of the year" },
+      { value: "5", label: "BBC brands worked across" },
+      { value: "1st", label: "Producer to explore archives for social-first storytelling at scale" },
+    ],
     embeds: {
       primary: { youtubeIds: ["IhF9FKxx6AM", "g83gdwEzmlU"] },
       secondary: { youtubeIds: ["v74HcB6_o6c", "IW3jEIYBFzg", "4UkZt5ek4Js", "T8c1eYwp-yc", "dyNlye8vMIk"] },
@@ -259,24 +273,24 @@ Following this work, the BBC recommended me directly to Netflix, where I went on
       "Translating complex scientific research into clear, engaging content for public, professional and policy-facing audiences.",
     sections: {},
     content: [
-    {
-  type: "text",
-  value: `
+      {
+        type: "text",
+        value: `
 I specialise in translating scientific and technical research into clear, engaging content for public, professional and policy-making audiences.
 
 My work sits at the intersection of science, storytelling and strategy: helping organisations identify what truly matters in their research, and shaping that into content people can understand, trust and engage with.
   `.trim(),
-},
-{ type: "youtube", ids: ["Kq6mVEqDje0"] },
-{
-  type: "text",
-  value: `
+      },
+      { type: "youtube", ids: ["Kq6mVEqDje0"] },
+      {
+        type: "text",
+        value: `
 I spent a year working with Abcam, supporting the development of an on-brand digital output that balanced scientific credibility with accessibility.
 
 This included boosting the reach of their podcast, creating in-event materials and thought-leader films, all designed to strengthen Abcam’s voice and presence across digital channels.
   `.trim(),
-},
-{ type: "youtube", ids: ["aMS9MyIO0tk"] },
+      },
+      { type: "youtube", ids: ["aMS9MyIO0tk"] },
       {
         type: "text",
         value: `
@@ -286,10 +300,10 @@ I’ve led a range of projects focused on public engagement and strategic narrat
         `.trim(),
       },
       {
-  type: "youtubeWall",
-  ids: ["KO9awcYxH9s", "DU9NmK7O-UY", "9zNSj2vV8sk", "Ug8uvqKMRqg", "7iX-wiKvYHs", "WcjnEmC_9q8"],
-  title: "Selected work",
-},
+        type: "youtubeWall",
+        ids: ["KO9awcYxH9s", "DU9NmK7O-UY", "9zNSj2vV8sk", "Ug8uvqKMRqg", "7iX-wiKvYHs", "WcjnEmC_9q8"],
+        title: "Selected work",
+      },
       {
         type: "text",
         value: `
@@ -298,11 +312,11 @@ For Turing 2.0, I directed senior stakeholder shoots and developed visual and an
 The work aimed to clarify not just what the Institute does, but why it matters.
         `.trim(),
       },
-        {
-  type: "youtubeWall",
-  ids: ["va-FiHqBM9w", "2kSl0xkq2lM", "Xy3jLgwKQqI"],
-  title: "Selected work",
-},
+      {
+        type: "youtubeWall",
+        ids: ["va-FiHqBM9w", "2kSl0xkq2lM", "Xy3jLgwKQqI"],
+        title: "Selected work",
+      },
       {
         type: "text",
         value: `
@@ -315,7 +329,7 @@ I’ve also led the video output for major events including AI UK and the Turing
 Alongside institutional work, I’ve created environmentally focused films for organisations such as Herts and Middlesex Wildlife Trust, producing immersive, seasonal films designed to reconnect audiences with local nature, and for Greenpeace, where work was screened at Glastonbury to engage festival audiences in climate and environmental issues. In both cases, the aim was not simply to inform, but to create emotional connection and shared meaning.
         `.trim(),
       },
-        {
+      {
         type: "youtubeWall",
         ids: ["etvPw7QN_qg", "eVaWX6E6-FA", "DX9dVavTIWU"],
         title: "Selected work",
@@ -329,7 +343,8 @@ Across all of this work, my focus is consistent: finding the story within comple
       {
         type: "text",
         value: `
-My approach to public engagement has been shaped by formal study, including the Creative Science Communication and Public Engagement course at the University of the West of England. There, I explored the shift from deficit models of communication — where information is simply delivered — towards dialogue-led approaches that recognise audiences’ prior knowledge, experiences and values. I see science communication not as simplification, but as meaning-making: balancing evidence with empathy, and logic with emotion.        `.trim(),
+My approach to public engagement has been shaped by formal study, including the Creative Science Communication and Public Engagement course at the University of the West of England. There, I explored the shift from deficit models of communication — where information is simply delivered — towards dialogue-led approaches that recognise audiences’ prior knowledge, experiences and values. I see science communication not as simplification, but as meaning-making: balancing evidence with empathy, and logic with emotion.
+        `.trim(),
       },
     ],
     tags: ["Science Communication", "Public Engagement", "Research Storytelling", "Strategy"],
