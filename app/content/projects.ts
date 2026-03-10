@@ -281,7 +281,7 @@ I specialise in translating scientific and technical research into clear, engagi
 My work sits at the intersection of science, storytelling and strategy: helping organisations identify what truly matters in their research, and shaping that into content people can understand, trust and engage with.
   `.trim(),
       },
-      { type: "youtube", ids: ["Kq6mVEqDje0"] },
+      { type: "youtube", ids: ["OKSOaGf7pFM"] },
       {
         type: "text",
         value: `
@@ -295,7 +295,12 @@ This included boosting the reach of their podcast, creating in-event materials a
         type: "text",
         value: `
 At The Alan Turing Institute, science communication has been a central part of my role.
-
+ `.trim(),
+      },
+      { type: "youtube", ids: ["Kq6mVEqDje0"] },
+      {
+        type: "text",
+        value: `
 I’ve led a range of projects focused on public engagement and strategic narrative, including the public-facing podcast Too Long Didn’t Read, documentary content around the Data Study Group programme, and the launch of Turing 2.0; the Institute’s shift towards a mission-led approach to research and implementation.
         `.trim(),
       },
