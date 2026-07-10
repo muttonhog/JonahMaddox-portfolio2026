@@ -697,15 +697,28 @@ The finished documentary was released by Canal+, premiered in Leicester Square, 
 It was subsequently released on Amazon Prime Video.
         `.trim(),
       },
-      {
+            {
         type: "text",
         value: `
 The project reflects my ability to find structure and meaning within complex, imperfect material, and to take on a leadership role when a clear story has yet to emerge.
         `.trim(),
       },
-      { type: "youtube", ids: ["jAI3R_CBZTk"] },
+      {
+        type: "gallery",
+        images: [
+          {
+            src: "/projects/get-better/get-better-poster.png",
+            alt: "Frank Turner cinema poster",
+          },
+        ],
+      },
     ],
-    tags: ["Documentary", "Long-form Editing", "Music Film", "Narrative Development"],
+    tags: [
+      "Documentary",
+      "Long-form Editing",
+      "Music Film",
+      "Narrative Development",
+    ],
   },
 
   {
