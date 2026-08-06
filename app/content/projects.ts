@@ -301,9 +301,9 @@ Too Long Didn't Read became one of the Institute's best-known public engagement 
       ],
     },
 
-    {
+{
   type: "heading",
-  value: "Also: Red Bicycle & Abcam",
+  value: "Other podcast work",
 },
 {
   type: "text",
@@ -314,14 +314,6 @@ For production company Red Bicycle I developed podcast sizzle packages for commi
 
 For Abcam I helped develop the visual identity for the organisation's podcast as part of a wider digital programme, creating style guides, motion graphics and templates for audiograms and other social assets so each conversation could reach audiences well beyond the podcast itself.
   `.trim(),
-},
-{
-  type: "youtubeWall",
-  ids: [
-    "p_5gos1N_qg",
-    "XJuF_C_vXFI",
-  ],
-  title: "Podcast sizzles",
 },
 {
   type: "links",
@@ -338,22 +330,15 @@ For Abcam I helped develop the visual identity for the organisation's podcast as
 Across these projects the throughline has been the same: developing editorial ideas, building production workflows and creating content that connects with the right audience. Whether launching an original public engagement podcast, producing conversations with senior policymakers or helping shape new podcast concepts, my focus is on making complex subjects engaging, accessible and worth people's time.
   `.trim(),
 },
-    {
-      type: "text",
-      value: `
-Across these projects the throughline is the same: I build the format, lead the people and systems that deliver it, and pay close attention to who's actually listening. I'm less interested in chasing views than in earning a returning audience, and in leaving an organisation with the workflows, standards and confidence to keep making strong work after I've moved on.
-      `.trim(),
-    },
-  ],
-  tags: [
-    "Podcasts",
-    "Video Podcasts",
-    "Audio",
-    "Public Engagement",
-    "Editorial Production",
-  ],
+],
+tags: [
+  "Podcasts",
+  "Video Podcasts",
+  "Audio",
+  "Public Engagement",
+  "Editorial Production",
+],
 },
-
   {
     title: "Too Long Didn’t Read",
     slug: "too-long-didnt-read",
