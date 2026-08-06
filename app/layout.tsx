@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Jonah Maddox | Digital Content & Public Engagement",
   description:
-    "Portfolio of Jonah Maddox, a Digital Content and Public Engagement producer specialising in video, motion, and audio storytelling.",
+    "Jonah Maddox is a content creative making films, podcasts and stories that turn complex work into things people connect with, and leading the teams behind them.",
   generator: "v0.app",
   icons: {
   icon: "/favicon.ico",

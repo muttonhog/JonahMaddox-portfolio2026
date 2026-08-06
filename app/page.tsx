@@ -8,7 +8,7 @@ export default function HomePage() {
       {/* Intro line */}
       <section className="mb-8 max-w-2xl">
         <p className="text-lg leading-relaxed text-foreground md:text-xl">
-          Digital content and public engagement for research organisations, broadcasters and mission-led brands.
+          I make films, podcasts and content that turn complex work into stories people connect with, and I build the teams and workflows that make it last.
         </p>
       </section>
 
