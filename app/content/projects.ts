@@ -34,11 +34,13 @@ export type ImpactMetric = {
 }
 
 export type ContentBlock =
+  | { type: "heading"; value: string; level?: 2 | 3 }
   | { type: "text"; value: string }
+  | { type: "metrics"; items: ImpactMetric[] }
   | { type: "youtube"; ids: string[] }
   | { type: "youtubeWall"; ids: string[]; title?: string }
   | { type: "vimeo"; ids: string[] }
-  | { type: "spotify" }
+  | { type: "spotify"; url?: string; title?: string }
   | { type: "gallery"; images: GalleryImage[] }
   | { type: "links"; links: ProjectLink[] }
 
@@ -85,12 +87,311 @@ export const projects: Project[] = [
   // ---- Featured case studies ----
 
   {
+  title: "Podcasts & Audio",
+  slug: "podcasts-audio",
+  year: "2019–2026",
+  org: "Nesta, The Alan Turing Institute, Abcam & Red Bicycle",
+  role: "Producer, Director & Creator",
+  featured: true,
+  thumbnail: "/thumbnails/podcasts.jpeg",
+  description:
+    "Original podcasts, established series, video-first production and pitch development for research organisations and production companies.",
+  sections: {},
+  content: [
+    {
+      type: "text",
+      value: `
+I create original podcasts, produce established series and develop sizzle packages for commissioners. But increasingly my work is about leading the people and thinking behind the work, not only making it.
+
+At the Turing I ran a podcast working group, directing a designer, a social media manager and a production assistant, and worked alongside the public engagement co-lead on comms planning and horizon scanning for the head of events and engagement. I directed recordings, booked and briefed guests, fact-checked scripts with researchers and experts, and worked with the head of comms to keep what we made aligned to the Institute's values. I also led the thinking behind the shows: running listener workshops for qualitative insight and analysing our data to understand who was listening and how to reach more people like them. I care most about retention, growing engaged, returning listeners by giving them more of what they value rather than chasing clicks. It's the listener I'm serving.
+      `.trim(),
+    },
+
+    {
+      type: "heading",
+      value: "The Policy Fix: Andy Burnham's First 100 Days",
+    },
+
+    {
+      type: "heading",
+      value: "Context",
+      level: 3,
+    },
+    {
+      type: "text",
+      value: `
+The Policy Fix is Nesta's flagship policy podcast, bringing together leading thinkers, researchers and decision-makers to explore practical solutions to society's biggest challenges.
+
+Shortly after joining Nesta as Group Content Production Manager, I was asked to produce a special mini-series ahead of Andy Burnham's first one hundred days as Prime Minister. The concept originated with Nesta's CEO, and the ambition was to respond while the political conversation was still unfolding.
+
+We had around two weeks to develop the format before recording began, followed by three weeks to produce, edit and publish the entire series while continuing to release supporting content across social platforms.
+      `.trim(),
+    },
+
+    {
+      type: "youtubeWall",
+      ids: [
+        "UfR7T-KuaEw",
+        "n9cBs-KWj7k",
+        "ayeBKH-x8eY",
+      ],
+      title: "Selected episodes",
+    },
+
+    {
+      type: "spotify",
+      url: "https://open.spotify.com/embed/show/3KlpRGGbeC0IKhWauh8CQd?",
+      title: "The Policy Fix on Spotify",
+    },
+
+    {
+      type: "heading",
+      value: "Challenge",
+      level: 3,
+    },
+    {
+      type: "text",
+      value: `
+The challenge was not simply producing a podcast. It was designing a production process capable of delivering high-quality video and audio episodes at the pace of the news cycle.
+
+The series involved coordinating senior internal stakeholders, booking high-profile external guests, directing contributors during recording and maintaining a consistent editorial tone across seven episodes, all while turning content around quickly enough to remain timely.
+
+As my first major project at Nesta, it was also a chance to establish trust, introduce new production methods and show what an in-house content team could deliver.
+      `.trim(),
+    },
+
+    {
+      type: "heading",
+      value: "Approach",
+      level: 3,
+    },
+    {
+      type: "text",
+      value: `
+I led production from initial planning through to publication.
+
+Working closely with the CEO, I helped develop the editorial approach, booked guests and planned recordings around demanding schedules. The series was recorded over five studio days, with as many as three episodes filmed in a single day.
+
+Production was built around a three-camera video workflow using an in-house studio. I directed contributors throughout each recording, aiming to create conversations that felt natural while keeping discussions focused and accessible.
+
+Alongside the series itself, I developed the existing studio into a more premium space and introduced a faster, more repeatable workflow. Live vision mixing using Blackmagic ATEM, integrated audio through Rodecaster and templated Adobe editing significantly reduced turnaround while maintaining quality, and left the team with systems they could keep using.
+
+Each episode was released as both a full video podcast and an audio podcast, supported by more than thirty social edits designed to extend the reach of each conversation across multiple platforms.
+
+Guests included Baroness Beeban Kidron OBE, Dan Neidle, Tony Curzon Price, Arun Advani, Mallory Durran, Hugo Harper and Tim Leunig.
+      `.trim(),
+    },
+
+    {
+      type: "heading",
+      value: "Impact",
+      level: 3,
+    },
+    {
+      type: "text",
+      value: `
+Within my first month at Nesta, I delivered a seven-episode mini-series matching the number of episodes produced across the previous six-month run of The Policy Fix, while introducing new studio workflows.
+
+The series generated strong early engagement and continues to grow as additional clips are released.
+      `.trim(),
+    },
+    {
+      type: "metrics",
+      items: [
+        {
+          value: "21,000+",
+          label: "Video views",
+        },
+        {
+          value: "2,700+",
+          label: "Hours watched",
+        },
+        {
+          value: "2,225+",
+          label: "Podcast plays and downloads",
+        },
+        {
+          value: "30+",
+          label: "Social edits produced",
+        },
+      ],
+    },
+    {
+      type: "text",
+      value: `
+The project established production systems that will continue to support future editions of The Policy Fix. I also contributed to a half-day workshop on how the series could be streamlined and improved, and several of those ideas are being carried into its next season. Feedback from senior leadership highlighted both the improved production quality and the speed at which episodes moved from recording to publication.
+      `.trim(),
+    },
+    {
+      type: "links",
+      links: [
+        {
+          label: "Watch the full Policy Fix playlist",
+          url: "https://youtube.com/playlist?list=PLndaoe-spJFxBl3gALe1VolpnxZj6oSuG&si=BhA5ZmQReu3uI29A",
+        },
+        {
+          label: "Listen to The Policy Fix",
+          url: "https://open.spotify.com/show/3KlpRGGbeC0IKhWauh8CQd?si=c439dec316c54dcf",
+        },
+      ],
+    },
+
+    {
+      type: "heading",
+      value: "Too Long Didn't Read",
+    },
+    {
+      type: "text",
+      value: `
+Too Long Didn't Read is a public engagement podcast I developed at The Alan Turing Institute in response to the growing noise around AI and the lack of calm, accessible discussion for a general audience.
+
+The idea originated outside the formal content plan, so the first challenge was making the case internally for an in-house podcast with a distinctive editorial voice. I developed the concept, produced a pilot and brought in AI ethics researcher Smera Jayadeva as co-host, building the format around genuine conversation between a curious non-expert, myself, and a researcher. Rather than positioning researchers as lecturers, the podcast encouraged real questions and thoughtful discussion, and I brought colleagues and contributors with me into a format the Institute hadn't tried before.
+
+From there I led the series from concept to publication. Alongside producing and editing, I developed the editorial format, researched topics, wrote scripts, interviewed researchers and external guests, and expanded the series to include live recordings at AI UK. Episodes explored subjects ranging from digital death and online remains to AI-generated politicians, misinformation and the "dead internet" theory.
+
+Too Long Didn't Read became one of the Institute's best-known public engagement projects and helped establish new ways of using podcasts, YouTube Shorts and community content alongside live events and wider communications. It showed how long-form conversation could build understanding and public trust around emerging technologies.
+      `.trim(),
+    },
+    {
+      type: "metrics",
+      items: [
+        {
+          value: "5,725",
+          label: "Total downloads",
+        },
+        {
+          value: "2,585",
+          label: "Downloads during the peak year, 2024",
+        },
+        {
+          value: "+71%",
+          label: "Year-on-year audience growth",
+        },
+        {
+          value: "20+",
+          label: "Episodes written, produced and presented",
+        },
+      ],
+    },
+    {
+      type: "spotify",
+      url: "https://open.spotify.com/embed/show/3dj0qppvPaGDDnVvvoZCuv",
+      title: "Too Long Didn't Read on Spotify",
+    },
+    {
+      type: "youtubeWall",
+      ids: [
+        "xf7NfV5cNLM",
+        "WjSy8frfOe8",
+        "4YID6-nqnN8",
+      ],
+      title: "Selected episodes and clips",
+    },
+    {
+      type: "links",
+      links: [
+        {
+          label: "Visit the full Too Long Didn't Read case study",
+          url: "/work/too-long-didnt-read",
+        },
+        {
+          label: "Watch the Too Long Didn't Read playlist",
+          url: "TLDR_YOUTUBE_PLAYLIST_URL",
+        },
+      ],
+    },
+
+    {
+      type: "heading",
+      value: "The Turing Podcast",
+    },
+    {
+      type: "text",
+      value: `
+Alongside Too Long Didn't Read, I produced the Alan Turing Institute's flagship research podcast.
+
+The brief here was different. Rather than building a new format, I focused on delivering consistent, high-quality conversations with researchers and external collaborators, holding the Institute's editorial standards, directing recordings and supporting the presenter to get the best from each discussion.
+
+The work deepened my experience of translating complex research into engaging long-form conversation for specialist and non-specialist audiences alike.
+      `.trim(),
+    },
+    {
+      type: "spotify",
+      url: "https://open.spotify.com/embed/show/5QpK2Gzpp3cpnNWHW3G7nn?",
+      title: "The Turing Podcast on Spotify",
+    },
+    {
+      type: "links",
+      links: [
+        {
+          label: "Listen to The Turing Podcast on YouTube",
+          url: "https://youtube.com/playlist?list=PLuD_SqLtxSdX7GsM6JxNAXycPC8BoC84p&si=O5ksrJX7O7bTlQP1",
+        },
+      ],
+    },
+
+    {
+      type: "heading",
+      value: "Also: Red Bicycle & Abcam",
+    },
+    {
+      type: "text",
+      value: `
+For production company Red Bicycle I developed new podcast concepts through sizzle packages for commissioners, finding the editorial proposition quickly and shaping interviews and supporting material into concise pitch films that showed how a full series could sound and feel.
+
+For Abcam I supported the brand look and feel for the launch of the organisation's podcast as part of a wider digital programme, creating style guides, animation identities and templates for audiograms and short-form assets so each conversation reached further across social, rather than sitting in a single channel.
+      `.trim(),
+    },
+    {
+      type: "youtubeWall",
+      ids: [
+        "p_5gos1N_qg",
+        "XJuF_C_vXFI",
+      ],
+      title: "Podcast sizzles",
+    },
+    {
+      type: "youtubeWall",
+      ids: [
+        "ToMNrLobKQw",
+        "xpKxX1tPo78",
+        "0ylcOh1d3as",
+      ],
+      title: "Selected audiograms",
+    },
+    {
+      type: "links",
+      links: [
+        {
+          label: "Listen to the Abcam podcast",
+          url: "https://www.abcam.com/en-us/stories/podcasts",
+        },
+      ],
+    },
+
+    {
+      type: "text",
+      value: `
+Across these projects the throughline is the same: I build the format, lead the people and systems that deliver it, and pay close attention to who's actually listening. I'm less interested in chasing views than in earning a returning audience, and in leaving an organisation with the workflows, standards and confidence to keep making strong work after I've moved on.
+      `.trim(),
+    },
+  ],
+  tags: [
+    "Podcasts",
+    "Video Podcasts",
+    "Audio",
+    "Public Engagement",
+    "Editorial Production",
+  ],
+},
+
+  {
     title: "Too Long Didn’t Read",
     slug: "too-long-didnt-read",
     year: "2022–2024",
     org: "The Alan Turing Institute",
     role: "Creator & Producer",
-    featured: true,
+    featured: false,
     thumbnail: "/thumbnails/tldr.jpg",
     description:
       "A public engagement podcast offering calm, accessible conversations about AI and data science, created at The Alan Turing Institute.",
