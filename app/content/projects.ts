@@ -302,73 +302,42 @@ Too Long Didn't Read became one of the Institute's best-known public engagement 
     },
 
     {
-      type: "heading",
-      value: "The Turing Podcast",
-    },
-    {
-      type: "text",
-      value: `
-Alongside Too Long Didn't Read, I produced the Alan Turing Institute's flagship research podcast.
+  type: "heading",
+  value: "Also: Red Bicycle & Abcam",
+},
+{
+  type: "text",
+  value: `
+Alongside leading original and established podcast series, I've also worked with organisations and production companies to develop new podcast concepts and strengthen existing ones.
 
-The brief here was different. Rather than building a new format, I focused on delivering consistent, high-quality conversations with researchers and external collaborators, holding the Institute's editorial standards, directing recordings and supporting the presenter to get the best from each discussion.
+For production company Red Bicycle I developed podcast sizzle packages for commissioners, shaping interviews and supporting material into concise pitch films that communicated the editorial proposition and tone of a potential series.
 
-The work deepened my experience of translating complex research into engaging long-form conversation for specialist and non-specialist audiences alike.
-      `.trim(),
-    },
+For Abcam I helped develop the visual identity for the organisation's podcast as part of a wider digital programme, creating style guides, motion graphics and templates for audiograms and other social assets so each conversation could reach audiences well beyond the podcast itself.
+  `.trim(),
+},
+{
+  type: "youtubeWall",
+  ids: [
+    "p_5gos1N_qg",
+    "XJuF_C_vXFI",
+  ],
+  title: "Podcast sizzles",
+},
+{
+  type: "links",
+  links: [
     {
-      type: "spotify",
-      url: "https://open.spotify.com/embed/show/5QpK2Gzpp3cpnNWHW3G7nn?",
-      title: "The Turing Podcast on Spotify",
+      label: "Listen to the Abcam podcast",
+      url: "https://www.abcam.com/en-us/stories/podcasts",
     },
-    {
-      type: "links",
-      links: [
-        {
-          label: "Listen to The Turing Podcast on YouTube",
-          url: "https://youtube.com/playlist?list=PLuD_SqLtxSdX7GsM6JxNAXycPC8BoC84p&si=O5ksrJX7O7bTlQP1",
-        },
-      ],
-    },
-
-    {
-      type: "heading",
-      value: "Also: Red Bicycle & Abcam",
-    },
-    {
-      type: "text",
-      value: `
-For production company Red Bicycle I developed new podcast concepts through sizzle packages for commissioners, finding the editorial proposition quickly and shaping interviews and supporting material into concise pitch films that showed how a full series could sound and feel.
-
-For Abcam I supported the brand look and feel for the launch of the organisation's podcast as part of a wider digital programme, creating style guides, animation identities and templates for audiograms and short-form assets so each conversation reached further across social, rather than sitting in a single channel.
-      `.trim(),
-    },
-    {
-      type: "youtubeWall",
-      ids: [
-        "p_5gos1N_qg",
-        "XJuF_C_vXFI",
-      ],
-      title: "Podcast sizzles",
-    },
-    {
-      type: "youtubeWall",
-      ids: [
-        "ToMNrLobKQw",
-        "xpKxX1tPo78",
-        "0ylcOh1d3as",
-      ],
-      title: "Selected audiograms",
-    },
-    {
-      type: "links",
-      links: [
-        {
-          label: "Listen to the Abcam podcast",
-          url: "https://www.abcam.com/en-us/stories/podcasts",
-        },
-      ],
-    },
-
+  ],
+},
+{
+  type: "text",
+  value: `
+Across these projects the throughline has been the same: developing editorial ideas, building production workflows and creating content that connects with the right audience. Whether launching an original public engagement podcast, producing conversations with senior policymakers or helping shape new podcast concepts, my focus is on making complex subjects engaging, accessible and worth people's time.
+  `.trim(),
+},
     {
       type: "text",
       value: `
